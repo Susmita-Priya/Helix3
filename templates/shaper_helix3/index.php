@@ -91,53 +91,54 @@ $doc->addScriptdeclaration("\nvar sp_offanimation = '" . $this->params->get('off
 	$megabgcolor = ($helix3->PresetParam('_megabg')) ? $helix3->PresetParam('_megabg') : '#ffffff';
 	$megabgtx = ($helix3->PresetParam('_megatx')) ? $helix3->PresetParam('_megatx') : '#333333';
 
-			// load css, less and js
-			$helix3->addCSS('bootstrap.min.css'); // CSS Files
-			
-			$version = new Version();
-			$JoomlaVersion = $version->getShortVersion();
+	$preloader_bg = ($helix3->getParam('preloader_bg')) ? $helix3->getParam('preloader_bg') : '#f5f5f5';
+	$preloader_tx = ($helix3->getParam('preloader_tx')) ? $helix3->getParam('preloader_tx') : '#f5f5f5';
 
-			if (version_compare($JoomlaVersion, '5.0.0', '<')) {
-				$helix3->addCSS('joomla-fontawesome.min.css, font-awesome-v4-shims.min.css');
-			} else {
-				$helix3->addCSS('fontawesome.min.css, font-awesome-v4-shims.min.css');
-			}
+	// load css, less and js
+	$helix3->addCSS('bootstrap.min.css'); // CSS Files
 
-			$helix3->addJS('bootstrap.min.js, jquery.sticky.js, main.js') // JS Files
-			->lessInit()->setLessVariables(array(
-				'preset' => $helix3->Preset(),
-				'bg_color' => $helix3->PresetParam('_bg'),
-				'text_color' => $helix3->PresetParam('_text'),
-				'major_color' => $helix3->PresetParam('_major'),
-				'megabg_color' => $megabgcolor,
-				'megatx_color' => $megabgtx,
-				'preloader_bg' => $preloader_bg,
-				'preloader_tx' => $preloader_tx,
-			))
-			->addLess('master', 'template');
-				
-			//RTL
-			if ($this->direction == 'rtl')
-			{
-				$helix3->addCSS('bootstrap-rtl.min.css')
-					->addLess('rtl', 'rtl');
-			}
-			
-			$helix3->addLess('presets', 'presets/' . $helix3->Preset(), array('class' => 'preset'));
-			
-			//Before Head
-			if ($before_head = $helix3->getParam('before_head')) {
-				echo $before_head . "\n";
-			}
-		?>
-	</head>
-	
-	<body class="<?php echo $helix3->bodyClass($body_classes); ?>">
-	
-		<div class="body-wrapper">
-			<div class="body-innerwrapper">
-				<?php $helix3->generatelayout(); ?>
-			</div>
+	$version = new Version();
+	$JoomlaVersion = $version->getShortVersion();
+
+	if (version_compare($JoomlaVersion, '5.0.0', '<')) {
+		$helix3->addCSS('joomla-fontawesome.min.css, font-awesome-v4-shims.min.css');
+	} else {
+		$helix3->addCSS('fontawesome.min.css, font-awesome-v4-shims.min.css');
+	}
+
+	$helix3->addJS('bootstrap.min.js, jquery.sticky.js, main.js') // JS Files
+		->lessInit()->setLessVariables(array(
+			'preset' => $helix3->Preset(),
+			'bg_color' => $helix3->PresetParam('_bg'),
+			'text_color' => $helix3->PresetParam('_text'),
+			'major_color' => $helix3->PresetParam('_major'),
+			'megabg_color' => $megabgcolor,
+			'megatx_color' => $megabgtx,
+			'preloader_bg' => $preloader_bg,
+			'preloader_tx' => $preloader_tx,
+		))
+		->addLess('master', 'template');
+
+	//RTL
+	if ($this->direction == 'rtl') {
+		$helix3->addCSS('bootstrap-rtl.min.css')
+			->addLess('rtl', 'rtl');
+	}
+
+	$helix3->addLess('presets', 'presets/' . $helix3->Preset(), array('class' => 'preset'));
+
+	//Before Head
+	if ($before_head = $helix3->getParam('before_head')) {
+		echo $before_head . "\n";
+	}
+	?>
+</head>
+
+<body class="<?php echo $helix3->bodyClass($body_classes); ?>">
+
+	<div class="body-wrapper">
+		<div class="body-innerwrapper">
+			<?php $helix3->generatelayout(); ?>
 		</div>
 	</div>
 
